@@ -18,8 +18,7 @@ const videoOpts = {
 };
 
 const ChapterContent = ({ chapter, content }: ChapterContentProps) => {
-//   console.log(content);
-
+  //   console.log(content);
 
   const onPlayerReady: YouTubeProps["onReady"] = (event) => {
     // access to player in all event handlers via event.target
@@ -30,20 +29,24 @@ const ChapterContent = ({ chapter, content }: ChapterContentProps) => {
       <h2 className="font-medium text-2xl">{chapter?.chapter_name}</h2>
       <p className="text-gray-500">{chapter?.description}</p>
 
-      {/* video */}
-      <div className="flex justify-center my-6">
-        <YouTube
-          videoId={content?.videoId}
-          opts={videoOpts}
-          onReady={onPlayerReady}
-        />
-      </div>
+      {/* Display video at the chapter level */}
+      {content?.videoId && (
+        <div className="flex justify-center my-6">
+          <YouTube
+            videoId={content.videoId}
+            opts={videoOpts}
+            onReady={onPlayerReady}
+          />
+        </div>
+      )}
 
       <div>
         {content &&
           content.content.map((item, index) => (
             <div key={index} className="my-5 bg-sky-50 rounded-lg p-5">
-              <h2 className="font-medium text-lg">{item.title}</h2>
+              <h2 className="font-medium text-lg">
+                {item.title}
+              </h2>
               <ReactMarkdown className={"mt-3"}>
                 {item.explanation}
               </ReactMarkdown>

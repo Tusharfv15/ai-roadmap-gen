@@ -11,9 +11,16 @@ export const getYoutubeVideos = async (query: string) => {
     q: query,
     maxResults: 1,
     type: "video",
+    relevanceLanguage: "en",
+    videoEmbeddable: true,
     key: env.YOUTUBE_API_KEY,
   };
 
-  const response = await axios.get(YOUTUBE_BASE_URL, { params: param });
-  return response.data.items;
+  try {
+    const response = await axios.get(YOUTUBE_BASE_URL, { params: param });
+    return response.data.items;
+  } catch (error) {
+    console.error("Error fetching YouTube videos:", error);
+    return [];
+  }
 };
